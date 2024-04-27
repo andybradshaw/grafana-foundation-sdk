@@ -192,11 +192,13 @@ func (resource *Panel) UnmarshalJSON(raw []byte) error {
 		dataqueryTypeHint = *resource.Datasource.Type
 	}
 
-	targets, err := cog.UnmarshalDataqueryArray(fields["targets"], dataqueryTypeHint)
-	if err != nil {
-		return err
+	if fields["targets"] != nil {
+		targets, err := cog.UnmarshalDataqueryArray(fields["targets"], dataqueryTypeHint)
+		if err != nil {
+			return err
+		}
+		resource.Targets = targets
 	}
-	resource.Targets = targets
 
 	return nil
 }
